@@ -1,10 +1,20 @@
 # Children of Morta – Italian Translation for macOS 🇮🇹
 
-Porting per macOS della traduzione italiana community di **Children of Morta**, realizzata originariamente da banz99, SLegend29 e AB_Jab.
+Porting per macOS della traduzione italiana community di **Children of Morta**.
 
 Un piccolo progetto nato per un motivo molto semplice: volevo giocare a Children of Morta in italiano sul mio Mac, ma la traduzione della community disponibile online non funzionava sulla versione macOS.
 
 Invece di rinunciare, ho provato a capire cosa non andasse e ad adattarla. Questo repository raccoglie il risultato di quel lavoro.
+
+## 🙏 Crediti
+
+Un ringraziamento speciale a **banz99, SLegend29 e AB_Jab** per aver realizzato la traduzione italiana originale.
+
+Senza il loro lavoro questo progetto non sarebbe stato possibile.
+
+La traduzione originale è disponibile qui:
+
+[Children of Morta – Traduzione italiana su Steam Community](https://steamcommunity.com/sharedfiles/filedetails/?id=2363914586)
 
 ---
 
@@ -605,18 +615,6 @@ echo "Versione originale ripristinata."
 - [UnityPy](https://github.com/K0lb3/UnityPy) – Lettura, modifica e ricostruzione degli asset Unity.
 - [Python](https://www.python.org/) – Analisi e trasferimento dei contenuti.
 - [Pillow](https://python-pillow.org/) – Analisi e confronto delle texture.
-
-## 🙏 Crediti
-
-Un ringraziamento speciale a **banz99, SLegend29 e AB_Jab** per aver realizzato la traduzione italiana originale.
-
-Senza il loro lavoro questo progetto non sarebbe stato possibile.
-
-La traduzione originale è disponibile qui:
-
-[Children of Morta – Traduzione italiana su Steam Community](https://steamcommunity.com/sharedfiles/filedetails/?id=2363914586)
-
-Un ringraziamento anche agli sviluppatori degli strumenti open source utilizzati per il porting.
 
 ## ⚖️ Copyright e distribuzione
 
