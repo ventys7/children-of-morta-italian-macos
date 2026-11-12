@@ -1,4 +1,3 @@
-
 # Children of Morta – Italian Translation for macOS 🇮🇹
 
 Porting per macOS della traduzione italiana community di **Children of Morta**.
@@ -44,6 +43,7 @@ Il gioco si avvia, i testi vengono visualizzati correttamente e anche i caratter
 **FUNZIONA! 😂**
 
 La traduzione è operativa e pronta per essere utilizzata.
+
 Buon divertimento e buona partita! 🇮🇹
 
 ---
@@ -105,7 +105,7 @@ Il porting è stato verificato tecnicamente e provato direttamente nel gioco, co
 
 | Elemento | Risultato |
 |---|---|
-| Traduzione italiana | <u>Funzionante</u> |
+| Traduzione italiana | Funzionante |
 | Menu e interfaccia | Visualizzazione corretta |
 | Dialoghi e sottotitoli | Visualizzazione corretta |
 | Descrizioni e oggetti | Visualizzazione corretta |
@@ -547,8 +547,8 @@ CORE="$APP/StreamingAssets/AssetBundles/core"
 RESOURCES="$APP/resources.assets"
 
 if [ ! -f "$PATCH/core" ] || [ ! -f "$PATCH/resources.assets" ]; then
-  echo "File della traduzione mancanti."
-  exit 1
+    echo "File della traduzione mancanti."
+    exit 1
 fi
 
 STAMP=$(date +%Y%m%d-%H%M%S)
@@ -581,12 +581,12 @@ sudo chown "$RES_UID:$RES_GID" "$RESOURCES"
 sudo chmod "$RES_MODE" "$RESOURCES"
 
 if ! cmp -s "$PATCH/core" "$CORE" || ! cmp -s "$PATCH/resources.assets" "$RESOURCES"; then
-  echo "Errore durante l'installazione."
+    echo "Errore durante l'installazione."
 
-  sudo cp -p "$BACKUP/core" "$CORE"
-  sudo cp -p "$BACKUP/resources.assets" "$RESOURCES"
+    sudo cp -p "$BACKUP/core" "$CORE"
+    sudo cp -p "$BACKUP/resources.assets" "$RESOURCES"
 
-  exit 1
+    exit 1
 fi
 
 echo ""
@@ -616,15 +616,15 @@ APP="/Applications/Children of Morta.app/Contents/Resources/Data"
 BACKUP_FILE="$HOME/Downloads/CoM-Italian-Mac-backup-last.txt"
 
 if [ ! -f "$BACKUP_FILE" ]; then
-  echo "Backup non trovato."
-  exit 1
+    echo "Backup non trovato."
+    exit 1
 fi
 
 BACKUP=$(cat "$BACKUP_FILE")
 
 if [ ! -f "$BACKUP/core" ] || [ ! -f "$BACKUP/resources.assets" ]; then
-  echo "File di backup mancanti."
-  exit 1
+    echo "File di backup mancanti."
+    exit 1
 fi
 
 sudo cp -p "$BACKUP/core" "$APP/StreamingAssets/AssetBundles/core"
@@ -637,37 +637,12 @@ echo "Versione originale ripristinata."
 
 ## 🛠️ Strumenti utilizzati
 
-- [UnityPy](https://github.com/K0lb3/UnityPy) – Lettura, modifica e ricostruzione degli asset Unity.
-- [Python](https://www.python.org/) – Analisi e trasferimento dei contenuti.
-- [Pillow](https://python-pillow.org/) – Analisi e confronto delle texture.
-
----
-
-## ⚖️ Copyright e distribuzione
-
-Questo è un progetto amatoriale e non ufficiale, realizzato per adattare una traduzione community a una versione del gioco non supportata dalla patch originale.
-
-Children of Morta è sviluppato da Dead Mage e pubblicato da 11 bit studios. Tutti i diritti relativi al gioco, ai suoi asset e ai marchi appartengono ai rispettivi proprietari.
-
-La traduzione italiana originale appartiene ai suoi autori.
-
-Questo progetto non è affiliato, approvato o supportato dagli sviluppatori o dai publisher di Children of Morta.
-
-Non vengono distribuiti gli asset originali del gioco né i file proprietari della traduzione. Per utilizzare il porting è necessario possedere una copia legittima del gioco e procurarsi separatamente la traduzione originale.
-
----
-
-*Made with a little patience, some Python and a lot of trial and error on macOS.* ❤️
----
-
-## 🛠️ Strumenti utilizzati
-
 Per realizzare il porting sono stati utilizzati:
 
 - [UnityPy](https://github.com/K0lb3/UnityPy) – Lettura, analisi, modifica e ricostruzione degli asset Unity.
 - [Python](https://www.python.org/) – Automazione delle operazioni di analisi e trasferimento dei contenuti.
 - [Pillow](https://python-pillow.org/) – Analisi e confronto delle texture.
-- TypeTreeGenerator – Lettura e modifica degli oggetti Unity utilizzando gli schemi originali del gioco.
+- **TypeTreeGenerator** – Lettura e modifica degli oggetti Unity utilizzando gli schemi originali del gioco.
 
 ---
 
