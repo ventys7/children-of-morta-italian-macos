@@ -140,7 +140,6 @@ Non sono ancora state testate:
 - Versione Steam.
 - Mac con Apple Silicon.
 - Altre versioni o aggiornamenti del gioco.
-- L'intera campagna e tutti i DLC.
 
 ---
 
