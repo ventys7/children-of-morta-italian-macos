@@ -41,7 +41,7 @@ Il gioco si avvia, i testi vengono visualizzati correttamente e anche i caratter
 
 ### AGGIORNAMENTO — 12 NOVEMBRE 2026
 
-**BRO, FUNZIONA! 😂**
+**FUNZIONA! 😂**
 
 La traduzione è operativa e pronta per essere utilizzata sulla versione macOS GOG per Mac Intel.
 
