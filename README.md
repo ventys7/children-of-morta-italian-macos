@@ -6,6 +6,10 @@ Un piccolo progetto nato per un motivo molto semplice: volevo giocare a Children
 
 Invece di rinunciare, ho provato a capire cosa non andasse e ad adattarla. Questo repository raccoglie il risultato di quel lavoro.
 
+**Ultimo aggiornamento: 12 novembre 2026**
+
+---
+
 ## 🙏 Crediti
 
 Un ringraziamento speciale a **banz99, SLegend29 e AB_Jab** per aver realizzato la traduzione italiana originale.
@@ -20,19 +24,29 @@ La traduzione originale è disponibile qui:
 
 ## 🎮 Stato del progetto
 
-**Il porting funziona!**
+**Il porting funziona! 🇮🇹**
 
 Ho installato e testato la traduzione sulla versione macOS GOG di Children of Morta.
 
 Il gioco si avvia, i testi vengono visualizzati correttamente e anche i caratteri accentati funzionano.
 
-Per il momento ho testato personalmente il **prologo**, che si è svolto senza crash, menu vuoti o problemi evidenti.
+~~Per il momento ho testato personalmente il prologo, che si è svolto senza crash, menu vuoti o problemi evidenti.~~
 
-Non ho ancora iniziato una partita vera e propria e, di conseguenza, non posso garantire che ogni singolo testo, evento o situazione del gioco sia stato verificato.
+~~Non ho ancora iniziato una partita vera e propria e, di conseguenza, non posso garantire che ogni singolo testo, evento o situazione del gioco sia stato verificato.~~
 
-Il progetto rimane aperto a eventuali correzioni e miglioramenti. Man mano che continuerò a giocare, aggiornerò il porting e questa documentazione nel caso emergano problemi.
+~~Il progetto rimane aperto a eventuali correzioni e miglioramenti. Man mano che continuerò a giocare, aggiornerò il porting e questa documentazione nel caso emergano problemi.~~
 
-Insomma, il vero test comincia adesso. Vediamo anche se riuscirò a finirlo! 😂
+~~Insomma, il vero test comincia adesso. Vediamo anche se riuscirò a finirlo! 😂~~
+
+### AGGIORNAMENTO — 12 NOVEMBRE 2026
+
+**FUNZIONA! 😂**
+
+La traduzione è operativa e pronta per essere utilizzata.
+
+Buon divertimento e buona partita! 🇮🇹
+
+---
 
 ## 📖 Da dove nasce tutto
 
@@ -47,6 +61,8 @@ Non aveva molto senso rifare da zero una traduzione già esistente, quindi ho pr
 La causa era nella struttura degli asset Unity: i file della patch erano costruiti per Windows, mentre quelli del gioco Mac erano destinati a macOS.
 
 Da lì è iniziato il lavoro di adattamento.
+
+---
 
 ## 🔧 Cosa è stato fatto
 
@@ -81,24 +97,29 @@ I 30 shader che differivano tra le versioni Windows e macOS sono rimasti quelli 
 
 Anche il nuovo `resources.assets` conserva la piattaforma macOS.
 
+---
+
 ## ✅ Risultato
 
-Il porting è stato verificato tecnicamente e provato direttamente nel gioco.
+Il porting è stato verificato tecnicamente e provato direttamente nel gioco, con esito positivo.
 
 | Elemento | Risultato |
 |---|---|
 | Traduzione italiana | Funzionante |
-| Menu e interfaccia | Testati nel prologo |
-| Dialoghi e sottotitoli | Testati nel prologo |
-| Descrizioni e oggetti | Testati nel prologo |
+| Menu e interfaccia | Visualizzazione corretta |
+| Dialoghi e sottotitoli | Visualizzazione corretta |
+| Descrizioni e oggetti | Visualizzazione corretta |
 | Caratteri accentati | Corretti |
 | Compatibilità AssetBundle macOS | Verificata |
 | Shader originali Mac | Conservati |
-| Crash durante il prologo | Nessuno riscontrato |
+| Avvio del gioco | Regolare |
+| Crash e problemi di visualizzazione | Nessuno riscontrato durante i test |
 
 La traduzione non utilizza servizi AI, API esterne o sistemi di traduzione in tempo reale.
 
 I testi italiani provengono direttamente dal lavoro originale della community.
+
+---
 
 ## 💻 Compatibilità
 
@@ -115,10 +136,10 @@ Ambiente utilizzato per realizzare e testare il porting:
 La compatibilità è stata verificata sulla versione GOG per Mac Intel.
 
 Non sono ancora state testate:
+
 - Versione Steam.
 - Mac con Apple Silicon.
 - Altre versioni o aggiornamenti del gioco.
-- L'intera campagna e tutti i DLC.
 
 ---
 
@@ -126,7 +147,10 @@ Non sono ancora state testate:
 
 La procedura è stata realizzata e testata su macOS Intel.
 
+### Requisiti
+
 Per applicare la traduzione servono:
+
 - Una copia GOG di Children of Morta per macOS.
 - La patch italiana originale della community.
 - Python 3.
@@ -134,7 +158,7 @@ Per applicare la traduzione servono:
 
 Non è necessario installare BepInEx o UnityGameTranslator.
 
-## 1. Scaricare la traduzione originale
+### 1. Scaricare la traduzione originale
 
 La patch italiana originale è disponibile qui:
 
@@ -148,7 +172,7 @@ Salvare il file nella cartella `Downloads`, senza estrarlo.
 
 La traduzione originale è stata realizzata da banz99, SLegend29 e AB_Jab. Questo progetto non ne rivendica la paternità.
 
-## 2. Preparare Python e le dipendenze
+### 2. Preparare Python e le dipendenze
 
 Aprire il Terminale e verificare che Python 3 sia disponibile:
 
@@ -168,7 +192,7 @@ python3 -m venv "$HOME/Downloads/UnityPy-Inspect"
 
 L'installazione delle dipendenze potrebbe richiedere qualche minuto.
 
-## 3. Verificare i percorsi
+### 3. Verificare i percorsi
 
 La procedura utilizza questi percorsi:
 
@@ -182,7 +206,7 @@ La procedura utilizza questi percorsi:
 
 Se il gioco si trova in una cartella differente, sarà necessario modificare il percorso nei comandi successivi.
 
-## 4. Adattare il bundle dei testi (core)
+### 4. Adattare il bundle dei testi (`core`)
 
 Il primo passaggio consiste nel trasferire i 23 TextAsset modificati dalla patch originale al bundle macOS.
 
@@ -312,7 +336,7 @@ Al termine verrà creato:
 
 `~/Downloads/CoM-core-Italian-Mac-test`
 
-## 5. Adattare il font e il bundle resources.assets
+### 5. Adattare il font e il bundle `resources.assets`
 
 Il secondo passaggio serve a recuperare i caratteri accentati italiani.
 
@@ -479,7 +503,7 @@ Al termine verrà creato:
 
 `~/Downloads/CoM-resources-Italian-Mac-test`
 
-## 6. Preparare i file per l'installazione
+### 6. Preparare i file per l'installazione
 
 Creare la cartella contenente i due file adattati:
 
@@ -504,7 +528,7 @@ CoM-Italian-Mac/
 └── resources.assets
 ```
 
-## 7. Installare la traduzione
+### 7. Installare la traduzione
 
 Chiudere completamente Children of Morta.
 
@@ -522,8 +546,8 @@ CORE="$APP/StreamingAssets/AssetBundles/core"
 RESOURCES="$APP/resources.assets"
 
 if [ ! -f "$PATCH/core" ] || [ ! -f "$PATCH/resources.assets" ]; then
-  echo "File della traduzione mancanti."
-  exit 1
+    echo "File della traduzione mancanti."
+    exit 1
 fi
 
 STAMP=$(date +%Y%m%d-%H%M%S)
@@ -556,12 +580,12 @@ sudo chown "$RES_UID:$RES_GID" "$RESOURCES"
 sudo chmod "$RES_MODE" "$RESOURCES"
 
 if ! cmp -s "$PATCH/core" "$CORE" || ! cmp -s "$PATCH/resources.assets" "$RESOURCES"; then
-  echo "Errore durante l'installazione."
+    echo "Errore durante l'installazione."
 
-  sudo cp -p "$BACKUP/core" "$CORE"
-  sudo cp -p "$BACKUP/resources.assets" "$RESOURCES"
+    sudo cp -p "$BACKUP/core" "$CORE"
+    sudo cp -p "$BACKUP/resources.assets" "$RESOURCES"
 
-  exit 1
+    exit 1
 fi
 
 echo ""
@@ -570,7 +594,7 @@ echo "Backup originale:"
 echo "$BACKUP"
 ```
 
-## 8. Avviare il gioco
+### 8. Avviare il gioco
 
 Aprire Children of Morta normalmente dal Finder.
 
@@ -580,7 +604,7 @@ Nelle impostazioni della lingua selezionare:
 
 La traduzione italiana utilizza lo slot linguistico spagnolo della patch originale.
 
-## 9. Ripristinare i file originali
+### 9. Ripristinare i file originali
 
 Per tornare alla versione originale del gioco, chiuderlo e incollare:
 
@@ -591,15 +615,15 @@ APP="/Applications/Children of Morta.app/Contents/Resources/Data"
 BACKUP_FILE="$HOME/Downloads/CoM-Italian-Mac-backup-last.txt"
 
 if [ ! -f "$BACKUP_FILE" ]; then
-  echo "Backup non trovato."
-  exit 1
+    echo "Backup non trovato."
+    exit 1
 fi
 
 BACKUP=$(cat "$BACKUP_FILE")
 
 if [ ! -f "$BACKUP/core" ] || [ ! -f "$BACKUP/resources.assets" ]; then
-  echo "File di backup mancanti."
-  exit 1
+    echo "File di backup mancanti."
+    exit 1
 fi
 
 sudo cp -p "$BACKUP/core" "$APP/StreamingAssets/AssetBundles/core"
@@ -612,21 +636,28 @@ echo "Versione originale ripristinata."
 
 ## 🛠️ Strumenti utilizzati
 
-- [UnityPy](https://github.com/K0lb3/UnityPy) – Lettura, modifica e ricostruzione degli asset Unity.
-- [Python](https://www.python.org/) – Analisi e trasferimento dei contenuti.
+Per realizzare il porting sono stati utilizzati:
+
+- [UnityPy](https://github.com/K0lb3/UnityPy) – Lettura, analisi, modifica e ricostruzione degli asset Unity.
+- [Python](https://www.python.org/) – Automazione delle operazioni di analisi e trasferimento dei contenuti.
 - [Pillow](https://python-pillow.org/) – Analisi e confronto delle texture.
+- **TypeTreeGenerator** – Lettura e modifica degli oggetti Unity utilizzando gli schemi originali del gioco.
+
+---
 
 ## ⚖️ Copyright e distribuzione
 
-Questo è un progetto amatoriale e non ufficiale, realizzato per adattare una traduzione community a una versione del gioco non supportata dalla patch originale.
+Questo è un progetto amatoriale e non ufficiale, realizzato con il solo scopo di adattare una traduzione community a una versione del gioco non supportata dalla patch originale.
 
-Children of Morta è sviluppato da Dead Mage e pubblicato da 11 bit studios. Tutti i diritti relativi al gioco, ai suoi asset e ai marchi appartengono ai rispettivi proprietari.
+**Children of Morta** è sviluppato da Dead Mage e pubblicato da 11 bit studios. Tutti i diritti relativi al gioco, ai suoi asset e ai marchi appartengono ai rispettivi proprietari.
 
-La traduzione italiana originale appartiene ai suoi autori.
+La traduzione italiana originale appartiene ai suoi autori: **banz99, SLegend29 e AB_Jab**.
 
-Questo progetto non è affiliato, approvato o supportato dagli sviluppatori o dai publisher di Children of Morta.
+Questo progetto non rivendica la paternità della traduzione originale e non è affiliato, approvato o supportato dagli sviluppatori o dai publisher di Children of Morta.
 
-Non vengono distribuiti gli asset originali del gioco né i file proprietari della traduzione. Per utilizzare il porting è necessario possedere una copia legittima del gioco e procurarsi separatamente la traduzione originale.
+Non vengono distribuiti gli asset originali del gioco né i file proprietari della traduzione. Per utilizzare il porting è necessario possedere una copia legittima del gioco e procurarsi separatamente la traduzione italiana originale.
+
+Il repository contiene esclusivamente documentazione e istruzioni per realizzare autonomamente l'adattamento su macOS.
 
 ---
 
