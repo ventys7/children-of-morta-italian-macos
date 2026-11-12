@@ -1,3 +1,4 @@
+
 # Children of Morta – Italian Translation for macOS 🇮🇹
 
 Porting per macOS della traduzione italiana community di **Children of Morta**.
@@ -40,9 +41,10 @@ Il gioco si avvia, i testi vengono visualizzati correttamente e anche i caratter
 
 ### AGGIORNAMENTO — 12 NOVEMBRE 2026
 
-**FUNZIONA CORRETTAMENTE!**
+**BRO, FUNZIONA! 😂**
 
-La traduzione è operativa e pronta per essere utilizzata.
+La traduzione è operativa e pronta per essere utilizzata sulla versione macOS GOG per Mac Intel.
+
 Buon divertimento e buona partita! 🇮🇹
 
 ---
@@ -116,7 +118,7 @@ Il porting è stato verificato tecnicamente e provato direttamente nel gioco, co
 
 La traduzione non utilizza servizi AI, API esterne o sistemi di traduzione in tempo reale.
 
-I testi italiani provengono direttamente dal lavoro originale della community, realizzato da banz99, SLegend29 e AB_Jab.
+I testi italiani provengono direttamente dal lavoro originale della community.
 
 ---
 
@@ -400,4 +402,290 @@ font_node = mac_font._get_typetree_node()
 texture_node = mac_tex._get_typetree_node()
 
 font_tree = patch_font.parse_as_dict(node=font_node)
-texture_tree = patch_tex.parse_as_dict(node=texture
+texture_tree = patch_tex.parse_as_dict(node=texture_node)
+
+if font_tree["m_Name"] != "Fairfax SDF":
+    raise SystemExit("Nome font inatteso.")
+
+if texture_tree["m_Name"] != "Fairfax SDF Atlas":
+    raise SystemExit("Nome texture inatteso.")
+
+required = {0x00C8, 0x00EC, 0x00F2}
+
+patch_chars = {
+    item["m_Unicode"]
+    for item in font_tree["m_CharacterTable"]
+}
+
+if not required.issubset(patch_chars):
+    raise SystemExit("Glifi italiani mancanti nella patch.")
+
+print("Glifi italiani verificati.")
+
+print("Trasferimento Fairfax SDF...")
+mac_font.patch(font_tree)
+
+print("Trasferimento Fairfax SDF Atlas...")
+mac_tex.patch(texture_tree)
+
+platforms = {asset.target_platform for asset in mac_env.assets}
+
+if platforms != {2}:
+    raise SystemExit("Piattaforma originale non macOS.")
+
+print("Salvataggio resources.assets...")
+
+result = mac_env.file.save(packer="original")
+
+with open(output, "wb") as f:
+    f.write(result)
+
+print("Verifica del nuovo bundle...")
+
+original = UnityPy.load(os.path.join(data, "resources.assets"))
+original.typetree_generator = gen
+
+original_font = find(original, 239, "MonoBehaviour")
+font_node = original_font._get_typetree_node()
+
+check = UnityPy.load(output)
+
+check_platforms = {asset.target_platform for asset in check.assets}
+
+if check_platforms != {2}:
+    os.remove(output)
+    raise SystemExit("Piattaforma errata.")
+
+new_font = find(check, 239, "MonoBehaviour").parse_as_dict(
+    node=font_node
+)
+
+new_chars = {
+    item["m_Unicode"]
+    for item in new_font["m_CharacterTable"]
+}
+
+if not required.issubset(new_chars):
+    os.remove(output)
+    raise SystemExit("Verifica glifi fallita.")
+
+for code, char in [
+    (0x00C8, "È"),
+    (0x00EC, "ì"),
+    (0x00F2, "ò")
+]:
+    print(char, "PRESENTE" if code in new_chars else "ASSENTE")
+
+if not required.issubset(new_chars):
+    os.remove(output)
+    raise SystemExit("Caratteri italiani non verificati.")
+
+new_tex = find(check, 40, "Texture2D")
+patch_tex = find(patch_env, 40, "Texture2D")
+
+from PIL import ImageChops
+
+image_patch = patch_tex.read().image.convert("RGBA")
+image_new = new_tex.read().image.convert("RGBA")
+
+if ImageChops.difference(image_patch, image_new).getbbox():
+    os.remove(output)
+    raise SystemExit("Atlante grafico differente.")
+
+print("Atlante grafico verificato.")
+print("Target Platform:", check_platforms)
+print("Caratteri font:", len(new_chars))
+print("Dimensione:", len(result), "bytes")
+print("File creato:", output)
+print("Originali non modificati.")
+PY
+```
+
+Al termine verrà creato:
+
+`~/Downloads/CoM-resources-Italian-Mac-test`
+
+### 6. Preparare i file per l'installazione
+
+Creare la cartella contenente i due file adattati:
+
+```bash
+mkdir -p "$HOME/Downloads/CoM-Italian-Mac"
+
+cp "$HOME/Downloads/CoM-core-Italian-Mac-test" \
+"$HOME/Downloads/CoM-Italian-Mac/core"
+
+cp "$HOME/Downloads/CoM-resources-Italian-Mac-test" \
+"$HOME/Downloads/CoM-Italian-Mac/resources.assets"
+
+echo "File preparati."
+ls -lh "$HOME/Downloads/CoM-Italian-Mac/"
+```
+
+La cartella deve contenere:
+
+```text
+CoM-Italian-Mac/
+├── core
+└── resources.assets
+```
+
+### 7. Installare la traduzione
+
+Chiudere completamente Children of Morta.
+
+Verificare che il gioco si trovi in `/Applications/Children of Morta.app`.
+
+Incollare nel Terminale:
+
+```bash
+set -e
+
+APP="/Applications/Children of Morta.app/Contents/Resources/Data"
+PATCH="$HOME/Downloads/CoM-Italian-Mac"
+
+CORE="$APP/StreamingAssets/AssetBundles/core"
+RESOURCES="$APP/resources.assets"
+
+if [ ! -f "$PATCH/core" ] || [ ! -f "$PATCH/resources.assets" ]; then
+  echo "File della traduzione mancanti."
+  exit 1
+fi
+
+STAMP=$(date +%Y%m%d-%H%M%S)
+BACKUP="$HOME/Downloads/CoM-Italian-Mac-backup-$STAMP"
+
+mkdir -p "$BACKUP"
+
+cp -p "$CORE" "$BACKUP/core"
+cp -p "$RESOURCES" "$BACKUP/resources.assets"
+
+printf '%s\n' "$BACKUP" > "$HOME/Downloads/CoM-Italian-Mac-backup-last.txt"
+
+CORE_UID=$(stat -f '%u' "$CORE")
+CORE_GID=$(stat -f '%g' "$CORE")
+CORE_MODE=$(stat -f '%Lp' "$CORE")
+
+RES_UID=$(stat -f '%u' "$RESOURCES")
+RES_GID=$(stat -f '%g' "$RESOURCES")
+RES_MODE=$(stat -f '%Lp' "$RESOURCES")
+
+sudo -v
+
+sudo cp "$PATCH/core" "$CORE"
+sudo cp "$PATCH/resources.assets" "$RESOURCES"
+
+sudo chown "$CORE_UID:$CORE_GID" "$CORE"
+sudo chmod "$CORE_MODE" "$CORE"
+
+sudo chown "$RES_UID:$RES_GID" "$RESOURCES"
+sudo chmod "$RES_MODE" "$RESOURCES"
+
+if ! cmp -s "$PATCH/core" "$CORE" || ! cmp -s "$PATCH/resources.assets" "$RESOURCES"; then
+  echo "Errore durante l'installazione."
+
+  sudo cp -p "$BACKUP/core" "$CORE"
+  sudo cp -p "$BACKUP/resources.assets" "$RESOURCES"
+
+  exit 1
+fi
+
+echo ""
+echo "Traduzione installata correttamente!"
+echo "Backup originale:"
+echo "$BACKUP"
+```
+
+### 8. Avviare il gioco
+
+Aprire Children of Morta normalmente dal Finder.
+
+Nelle impostazioni della lingua selezionare:
+
+**Español**
+
+La traduzione italiana utilizza lo slot linguistico spagnolo della patch originale.
+
+### 9. Ripristinare i file originali
+
+Per tornare alla versione originale del gioco, chiuderlo e incollare:
+
+```bash
+set -e
+
+APP="/Applications/Children of Morta.app/Contents/Resources/Data"
+BACKUP_FILE="$HOME/Downloads/CoM-Italian-Mac-backup-last.txt"
+
+if [ ! -f "$BACKUP_FILE" ]; then
+  echo "Backup non trovato."
+  exit 1
+fi
+
+BACKUP=$(cat "$BACKUP_FILE")
+
+if [ ! -f "$BACKUP/core" ] || [ ! -f "$BACKUP/resources.assets" ]; then
+  echo "File di backup mancanti."
+  exit 1
+fi
+
+sudo cp -p "$BACKUP/core" "$APP/StreamingAssets/AssetBundles/core"
+sudo cp -p "$BACKUP/resources.assets" "$APP/resources.assets"
+
+echo "Versione originale ripristinata."
+```
+
+---
+
+## 🛠️ Strumenti utilizzati
+
+- [UnityPy](https://github.com/K0lb3/UnityPy) – Lettura, modifica e ricostruzione degli asset Unity.
+- [Python](https://www.python.org/) – Analisi e trasferimento dei contenuti.
+- [Pillow](https://python-pillow.org/) – Analisi e confronto delle texture.
+
+---
+
+## ⚖️ Copyright e distribuzione
+
+Questo è un progetto amatoriale e non ufficiale, realizzato per adattare una traduzione community a una versione del gioco non supportata dalla patch originale.
+
+Children of Morta è sviluppato da Dead Mage e pubblicato da 11 bit studios. Tutti i diritti relativi al gioco, ai suoi asset e ai marchi appartengono ai rispettivi proprietari.
+
+La traduzione italiana originale appartiene ai suoi autori.
+
+Questo progetto non è affiliato, approvato o supportato dagli sviluppatori o dai publisher di Children of Morta.
+
+Non vengono distribuiti gli asset originali del gioco né i file proprietari della traduzione. Per utilizzare il porting è necessario possedere una copia legittima del gioco e procurarsi separatamente la traduzione originale.
+
+---
+
+*Made with a little patience, some Python and a lot of trial and error on macOS.* ❤️
+---
+
+## 🛠️ Strumenti utilizzati
+
+Per realizzare il porting sono stati utilizzati:
+
+- [UnityPy](https://github.com/K0lb3/UnityPy) – Lettura, analisi, modifica e ricostruzione degli asset Unity.
+- [Python](https://www.python.org/) – Automazione delle operazioni di analisi e trasferimento dei contenuti.
+- [Pillow](https://python-pillow.org/) – Analisi e confronto delle texture.
+- TypeTreeGenerator – Lettura e modifica degli oggetti Unity utilizzando gli schemi originali del gioco.
+
+---
+
+## ⚖️ Copyright e distribuzione
+
+Questo è un progetto amatoriale e non ufficiale, realizzato con il solo scopo di adattare una traduzione community a una versione del gioco non supportata dalla patch originale.
+
+**Children of Morta** è sviluppato da Dead Mage e pubblicato da 11 bit studios. Tutti i diritti relativi al gioco, ai suoi asset e ai marchi appartengono ai rispettivi proprietari.
+
+La traduzione italiana originale appartiene ai suoi autori: **banz99, SLegend29 e AB_Jab**.
+
+Questo progetto non rivendica la paternità della traduzione originale e non è affiliato, approvato o supportato dagli sviluppatori o dai publisher di Children of Morta.
+
+Non vengono distribuiti gli asset originali del gioco né i file proprietari della traduzione. Per utilizzare il porting è necessario possedere una copia legittima del gioco e procurarsi separatamente la traduzione italiana originale.
+
+Il repository contiene esclusivamente documentazione e istruzioni per realizzare autonomamente l'adattamento su macOS.
+
+---
+
+*Made with a little patience, some Python and a lot of trial and error on macOS.* ❤️
