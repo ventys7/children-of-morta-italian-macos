@@ -43,8 +43,7 @@ Il gioco si avvia, i testi vengono visualizzati correttamente e anche i caratter
 
 **FUNZIONA! 😂**
 
-La traduzione è operativa e pronta per essere utilizzata sulla versione macOS GOG per Mac Intel.
-
+La traduzione è operativa e pronta per essere utilizzata.
 Buon divertimento e buona partita! 🇮🇹
 
 ---
